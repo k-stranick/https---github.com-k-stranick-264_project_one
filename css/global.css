@@ -1,0 +1,36 @@
+/* 
+Name: Kyle Stranick
+Course: ITN 264
+Section: 201
+Title: Assignment 4: Bootstrap
+*/ 
+ 
+ /* Navbar */
+ .navbar {
+     background-color: #34495e;
+     /* Dark blue-gray background */
+     padding-left: 40px;
+     padding-right: 40px;
+     
+ }
+
+ .navbar .navbar-brand:hover {
+     color: #2ecc71;
+     /* Green on hover */
+     
+ }
+
+ .navbar .nav-link {
+     color: #f9f9f9;
+     /* Light text color */
+ }
+
+ .navbar .nav-link:hover {
+     color: #2ecc71;
+     /* Green on hover */
+ }
+
+ .global-body {
+     background-color: #10284191;
+ }
+
