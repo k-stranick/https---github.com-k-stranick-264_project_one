@@ -15,13 +15,13 @@
 	define( 'DB_HOST', 'localhost' );
   
 	// ** MySQL database name **
-	define( 'DB_NAME', 'database_name_here' );
+	define( 'DB_NAME', 'assignment_nine' );
 
 	// ** MySQL database username **
-	define( 'DB_USER', 'username_here' );
+	define( 'DB_USER', 'database_connection_user' );
 
 	// ** MySQL database password **
-	define( 'DB_PASSWORD', 'password_here' );
+	define( 'DB_PASSWORD', '-qxwrBHbY-t3Da@0' );
 	
 
 	/* $db_conn is a database connection object.  It will be used with other functions
@@ -35,5 +35,5 @@
 	if ($db_conn -> connect_errno) {
 		die("Failed to connect to MySQL server: " . $db_conn -> connect_error);
 	}
-    echo "Connected successfully";
+
 ?> 

@@ -2,60 +2,30 @@
 Name: Kyle Stranick
 Course: ITN 264
 Section: 201
-Title: Assignment 4: Bootstrap
+Title: Assignment Module 9: Database Connection
+Date: 10/29/2024
 -->
 
 
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secondhand Herold</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="..\css\landingpage.css" rel="stylesheet">
-    <link href="..\css\global.css" rel="stylesheet">
-</head>
+<?php
+require_once '../php/globalfunctions.php';
+generateHeader('Products', ['../css/global.css', '../css/landingpage.css']);
+generateNavBar();
+?>
 
 <body class="global-body">
-        <!-- Navigation Bar -->
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <!--sets navbar color scheme (light colors) and size will expand or contrast automatically -->
-            <a class="navbar-brand" href="landing.html">Secondhand Herold</a> <!--clicking the site name will go home-->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button> <!-- makes the navbar a hamburger when screen shrinks-->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="landing.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="products.html">Browse Items</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="events.html">Events</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="sell.html">Sell an Item</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+
 
         <!-- main Section -->
         <div class="entry-section text-center">
             <div class="main-content">
                 <h1>Find Great Deals in Your Neighborhood</h1>
                 <p>Buy or sell locally, safely, and quickly!</p>
-                <a href="products.html" class="btn btn-primary">Browse Items</a>
-                <a href="sell.html" class="btn btn-secondary">Sell an Item</a>
+                <a href="products.php" class="btn btn-primary">Browse Items</a>
+                <a href="sell.php" class="btn btn-secondary">Sell an Item</a>
             </div>
         </div>
 
@@ -119,16 +89,6 @@ Title: Assignment 4: Bootstrap
                 </div>
             </div>
         </div>
-
-        <!-- Footer -->
-        <footer class="text-center mt-5 bg-dark text-white py-3">
-            <p>&copy; 2024 Secondhand Herold. All rights reserved.</p>
-        </footer>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
-
+        <?php generateFooter()?>
     </body>
-
 </html>
