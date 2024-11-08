@@ -1,3 +1,11 @@
+<!-- 
+Name: Kyle Stranick
+Course: ITN 264
+Section: 201
+Title: Assignment 10: Display Database Data
+Due: 11/8/2024
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,13 +25,14 @@ function getSortOrder($column)
   return ($currentColumn === $column && $currentOrder === 'ASC') ? 'DESC' : 'ASC';
 }
 
-function getSortIcon($column) {
+function getSortIcon($column)
+{
   $currentColumn = $_GET['column'] ?? 'id';
   $currentOrder = $_GET['order'] ?? 'ASC';
 
   // Only show icon if the current column matches the sorted column
   if ($currentColumn === $column) {
-      return $currentOrder === 'ASC' ? '▲' : '▼'; // Up for ASC, down for DESC
+    return $currentOrder === 'ASC' ? '▲' : '▼'; // Up for ASC, down for DESC
   }
   return ''; // No icon if column is not the current sorted column
 }

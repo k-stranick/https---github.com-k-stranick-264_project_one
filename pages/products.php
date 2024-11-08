@@ -2,8 +2,8 @@
 Name: Kyle Stranick
 Course: ITN 264
 Section: 201
-Title: Assignment Module 9: Database Connection
-Date: 10/29/2024
+Title: Assignment 10: Display Database Data
+Due: 11/8/2024
 -->
 
 <!DOCTYPE html>
@@ -113,8 +113,8 @@ generateNavBar();
                             </div>
                             <div class="row mb-3">
                                 <div class="col-sm-6">
-                                <label for="price">Price</label>
-                                <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" required>
+                                    <label for="price">Price</label>
+                                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" required>
                                 </div>
                                 <div class="col-sm-6">
                                     <label for="state">Condition</label>

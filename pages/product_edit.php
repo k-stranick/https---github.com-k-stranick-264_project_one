@@ -1,3 +1,14 @@
+<!-- 
+Name: Kyle Stranick
+Course: ITN 264
+Section: 201
+Title: Assignment 10: Display Database Data
+Due: 11/8/2024
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
 <?php
 session_start();
 require_once '../database/mysqli_conn.php';
@@ -10,7 +21,8 @@ $error = false;
 $message = "";
 
 // Function to sanitize form inputs
-function sanitize($data) {
+function sanitize($data)
+{
     return htmlspecialchars(trim(stripslashes($data)));
 }
 
@@ -80,8 +92,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
 
 <body class="global-body">
     <div class="container mt-5">
@@ -91,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php echo $message; ?>
             </div>
         <?php endif; ?>
-        
+
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="form-section">
