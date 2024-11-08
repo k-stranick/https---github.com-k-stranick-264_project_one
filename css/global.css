@@ -32,6 +32,23 @@ Title: Assignment 4: Bootstrap
      /* Green on hover */
  }
 
+/* Dropdown Menu */
+.navbar .dropdown-menu {
+    background-color: #34495e; /* Match the navbar background */
+    border: none; /* Remove border */
+}
+
+/* Dropdown items */
+.navbar .dropdown-menu .dropdown-item {
+    color: #f9f9f9; /* Light text color for dropdown items */
+}
+
+/* Dropdown item hover effect */
+.navbar .dropdown-menu .dropdown-item:hover {
+    color: #2ecc71; /* Green on hover */
+    background-color: #2c3e50; /* Darker shade for hover background */
+}
+
  .global-body {
      background-color: #10284191;
  }

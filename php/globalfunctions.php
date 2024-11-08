@@ -18,7 +18,11 @@ function generateHeader($title, $stylesheets = [])
     <!-- Add Font Awesome css file -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer">';
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- font for table move this??  -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+  ';
 
   foreach ($stylesheets as $stylesheet) {
     echo '<link rel="stylesheet" href="' . htmlspecialchars($stylesheet) . '">';
@@ -30,34 +34,47 @@ function generateHeader($title, $stylesheets = [])
 
 
 function generateNavBar() {
-    echo'
+    echo '
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <!--sets navbar color scheme (light colors) and size will expand or contrast automatically -->
-        <a class="navbar-brand" href="landing.php">Second Hand Herold</a> <!--clicking the site name will go home-->
+        <a class="navbar-brand" href="landing.php">Second Hand Herold</a> 
+        
+        <!-- Hamburger button for smaller screens -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-        </button> <!-- makes the navbar a hamburger when screen shrinks-->
+        </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
+                <!-- Home Link -->
                 <li class="nav-item">
                     <a class="nav-link" href="landing.php">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="products.php">Browse Items</a>
+
+                <!-- Listings Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="listingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Listings
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="listingsDropdown">
+                        <li><a class="dropdown-item" href="sell.php">Sell an Item</a></li>
+                        <li><a class="dropdown-item" href="products.php">Browse Items</a></li>
+                        <li><a class="dropdown-item" href="item_table.php">Edit Listings</a></li>
+                    </ul>
                 </li>
-                <li class="nav-item active">
+
+                <!-- Events Link -->
+                <li class="nav-item">
                     <a class="nav-link" href="events.php">Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="sell.php">Sell an Item</a>
                 </li>
             </ul>
         </div>
     </nav>
     ';
 }
+
+
 
 
 
