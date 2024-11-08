@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `assignment_nine`.`products` (
   `image_path` TEXT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8mb4;
 
 

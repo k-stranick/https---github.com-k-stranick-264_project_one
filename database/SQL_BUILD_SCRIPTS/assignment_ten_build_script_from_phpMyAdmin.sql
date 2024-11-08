@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2024 at 04:32 AM
+-- Generation Time: Nov 08, 2024 at 07:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,9 +43,16 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `item_name`, `price`, `city`, `state`, `condition`, `description`, `image_path`) VALUES
-(1, 'PS4', 300, 'Selbyville', 'de', 'used', 'Lightly used, in great shape.', '../media/ps4.jpg'),
-(2, 'Kitchen Triple Sink\r\n', 250, 'Gumboro', 'de', 'used', ' Used, must pick up, no holds.', '../media/triple_sink.jpg'),
-(3, '97 Jeep Wrangler\r\n', 5000, 'Millsboro', 'de', 'used', 'Used but garage kept. Price is FIRM!', '../media/jeep.jpg,../media/jeep_2.jpg,../media/jeep_3.jpg');
+(1, 'PS4', 1234, 'Selbyville', 'DE', 'used', 'Lightly used, in great shape.  test', '../media/ps4.jpg'),
+(2, 'Kitchen Triple Sink', 3433243, 'Gumboro', 'DE', 'used', 'CHANGE PLEASE', '../media/triple_sink.jpg'),
+(3, '97 Jeep Wrangler\r\n', 5000, 'Millsboro', 'de', 'used', 'Used but garage kept. Price is FIRM!', '../media/jeep.jpg,../media/jeep_2.jpg,../media/jeep_3.jpg'),
+(6, 'test', 3, 'test', 'te', 'test', 'test', '../media/keiko-and-I-lake.jpg'),
+(7, 'test2', 7, 'trte', 'tr', 'test', 'teest2', '../media/keiko-maine-trip.jpg'),
+(8, 'test2', 7, 'trte', 'tr', 'test', 'teest2', '../media/keiko-maine-trip.jpg'),
+(9, 'TEST', 3, 'trewtrew', 'tr', 'trewtrew', 'trewtre', '../media/keiko-and-i.jpg,../media/keiko-and-I-lake.jpg,../media/keiko-maine-trip.jpg'),
+(10, 'TEST', 432, 'tre', 'TR', 'trewdfsg', 'rew', '../media/Screenshot 2024-04-08 201917.png'),
+(11, 'testing again', 1234, 'testtown', 'te', 'old', 'this is a test ', '../media/FB_IMG_1710849899679.jpg,../media/keiko-and-I-lake.jpg,../media/Screenshot 2024-04-08 201917.png'),
+(12, 'adding a test', 23, 'test', 'DE', 'test', 'yupp its a test , update', '../media/20180527_192639.jpg');
 
 --
 -- Indexes for dumped tables
@@ -65,7 +72,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
