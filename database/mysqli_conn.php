@@ -25,8 +25,7 @@
 	
 
 	/* $db_conn is a database connection object.  It will be used with other functions
-        so that we can communicate with the database server.  You could use any
-        variable name for this. */
+        so that we can communicate with the database server. */
 	
 	 
 	$db_conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);

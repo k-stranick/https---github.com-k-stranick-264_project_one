@@ -34,7 +34,7 @@ function generateNavBar() {
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <!--sets navbar color scheme (light colors) and size will expand or contrast automatically -->
-        <a class="navbar-brand" href="landing.php">Secondhand Herold</a> <!--clicking the site name will go home-->
+        <a class="navbar-brand" href="landing.php">Second Hand Herold</a> <!--clicking the site name will go home-->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -66,7 +66,7 @@ function generateFooter()
     echo '
         <!-- Footer -->
         <footer class="text-center mt-5 bg-dark text-white py-3">
-            <p>&copy; 2024 Local Resale. All rights reserved.</p>
+            <p>&copy; 2024 Second Hand Herold. All rights reserved.</p>
         </footer>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

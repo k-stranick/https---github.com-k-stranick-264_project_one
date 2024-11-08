@@ -1,0 +1,29 @@
+/* Custom Table Header Background Color */
+.table thead th {
+    background-color: #3582b6;
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Table Cell Padding */
+.table td, .table th {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+/* Hover Effect for Table Rows */
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button Style for Edit */
+.btn-warning {
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+    color: white;
+}
+.btn-warning:hover {
+    background-color: #ec971f;
+    border-color: #d58512;
+}
+

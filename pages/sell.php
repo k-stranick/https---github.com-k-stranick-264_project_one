@@ -24,8 +24,7 @@ require_once '../php/globalfunctions.php';
         <div class="row justify-content-center">
             <div class="col-md-6"> <!-- Form is now limited to 6 out of 12 columns on medium or larger screens -->
                 <div class="form-section">
-                    <form action="sell_item.html" method="post" enctype="multipart/form-data">
-                        <!-- Should add PHP at some point -->
+                    <form action="../php/submit_item.php" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label for="itemTitle">Item Title</label>
                             <input type="text" class="form-control" id="itemTitle" name="itemTitle" placeholder="Enter item title" required>
