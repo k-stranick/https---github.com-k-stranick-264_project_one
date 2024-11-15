@@ -16,6 +16,7 @@ require_once '../php/globalfunctions.php';
 generateHeader('Edit Item', ['../css/global.css', '../css/edit-table.css']);
 generateNavBar();
 
+
 function getSortOrder($column)
 {
   $currentOrder = $_GET['order'] ?? 'ASC';

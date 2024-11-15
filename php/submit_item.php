@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Step 3: Execute the statement
     if ($stmt->execute()) {
         // Redirect to the product page after successful submission
-        header("Location: ../pages/products.php"); // Replace 'products.php' with the actual URL of your product page
+        header("Location: ../pages/products.php"); 
         exit(); // Make sure to call exit to stop further script execution
     } else {
         echo "Error: " . $stmt->error;

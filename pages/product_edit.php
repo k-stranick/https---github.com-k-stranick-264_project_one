@@ -1,10 +1,10 @@
-<!-- 
-Name: Kyle Stranick
-Course: ITN 264
-Section: 201
-Title: Assignment 10: Display Database Data
-Due: 11/8/2024
--->
+<?php
+// Name: Kyle Stranick
+// Course: ITN 264
+// Section: 201
+// Title: Assignment 10: Display Database Data
+// Due: 11/8/2024
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +13,11 @@ Due: 11/8/2024
 session_start();
 require_once '../database/mysqli_conn.php';
 require_once '../php/globalfunctions.php';
-generateHeader('Edit Item', ['../css/global.css', '../css/edit-form.css']);
+if (function_exists('generateHeader')) {
+    generateHeader('Edit Item', ['../css/global.css', '../css/edit-form.css']);
+} else {
+    die('Error: generateHeader function is not defined.');
+}
 generateNavBar();
 
 $product_id = $_GET['id'] ?? null;
@@ -21,9 +25,10 @@ $error = false;
 $message = "";
 
 // Function to sanitize form inputs
-function sanitize($data)
+function sanitize($data, $is_us_state = false)
 {
-    return htmlspecialchars(trim(stripslashes($data)));
+    $data = htmlspecialchars(trim(stripslashes($data)));
+    return $is_us_state ? strtoupper($data) : $data;
 }
 
 // Check if the form is submitted
@@ -35,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $price = sanitize($_POST['price']);
     $condition = sanitize($_POST['condition']);
     $city = sanitize($_POST['city']);
-    $state = strtoupper(sanitize($_POST['state']));
+    $state = sanitize($_POST['state'], true);
 
     // Validate required fields
     if (empty($item_name) || empty($description) || empty($price) || empty($condition) || empty($city) || empty($state)) {
@@ -79,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $condition = $row['condition'];
             $city = $row['city'];
             $state = $row['state'];
-            // FIX $image_path = $row['image_path'];
+            $image_path = $row['image_path'];
         } else {
             header("Location: edit_items.php?message=Product not found.");
             exit();
@@ -97,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="container mt-5">
         <h2 class="text-center">Edit Item Details</h2>
         <?php if ($message): ?>
-            <div class="alert <?php echo $error ? 'alert-danger' : 'alert-success'; ?>">
+            <div class="alert <?= $error ? 'alert-danger' : 'alert-success'; ?>">
                 <?php echo $message; ?>
             </div>
         <?php endif; ?>
@@ -133,13 +138,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="condition">Condition</label>
                             <input type="text" class="form-control" id="condition" name="condition" value="<?php echo $condition; ?>" required>
                         </div>
-                        <!-- Need to rework the upload 
-                        <div class="mb-3">
-                            <label for="image">Upload New Images (optional):</label>
-                            <input type="file" class="form-control" id="image" name="image[]" multiple>
-                            <small>Current images: <?php echo htmlspecialchars($image_path); ?></small>
-                        </div>
-                        -->
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Update Product</button>
                             <a href="item_table.php" class="btn btn-secondary">Cancel</a>
@@ -147,8 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         </div>
                     </form>
-                </div>
-            </div>
+                            <a href="item_table.php" class="btn btn-secondary">Cancel</a>
         </div>
     </div>
     <?php generateFooter(); ?>

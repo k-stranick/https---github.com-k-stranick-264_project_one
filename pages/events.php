@@ -64,6 +64,9 @@ generateNavBar();
                         <label for="fullName">Full Name</label>
                         <input type="text" class="form-control" id="fullName" name="fullName" required>
                     </div>
+                    <div class="form-group
+                        <label for="telephone">Telephone Number</label>
+                        <input type="tel" class="form-control" id="telephone" name="telephone" required>
                     <div class="form-group">
                         <label for="email">Email Address</label>
                         <input type="email" class="form-control" id="email" name="email" required>
