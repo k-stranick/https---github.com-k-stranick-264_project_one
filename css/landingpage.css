@@ -8,6 +8,7 @@ Due: 11/8/2024
 
 /* Entry section styling */
 .entry-section {
+    position: relative; /* Required for positioning the pseudo-element */
     background-image: url('../media/fleamarket.jpg');
     background-size: cover;
     background-position: center;
@@ -17,6 +18,23 @@ Due: 11/8/2024
     justify-content: center;
     color: white;
     text-shadow: 2px 2px 6px #000000;
+    overflow: hidden; /* Ensure the pseudo-element stays within bounds */
+}
+
+.entry-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Black overlay with 50% opacity */
+    z-index: 1; /* Ensure it sits below the text */
+}
+
+.entry-section * {
+    position: relative; /* Bring content above the overlay */
+    z-index: 2;
 }
 
 .entry-section h1 {
@@ -49,6 +67,7 @@ Due: 11/8/2024
 .features {
     margin-top: 50px;
     color: white;
+    text-shadow: 2px 2px 6px #000000;
 }
 
 .features .icon {
@@ -60,6 +79,10 @@ Due: 11/8/2024
 .categories {
     margin-top: 50px;
     color: white;
+}
+
+.categories-heading {
+    text-shadow: 2px 2px 6px #000000;
 }
 
 .category-card {
