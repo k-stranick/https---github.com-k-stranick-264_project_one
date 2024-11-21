@@ -1,6 +1,10 @@
-<!-- products -->
-
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
 // Name: Kyle Stranick
 // Course: ITN 264
 // Section: 201
@@ -15,6 +19,8 @@ $productController = new ProductController($db_conn);
 
 // Query to fetch products from the database
 $products = $productController->fetchProducts();
+
+// Page settings
 $title = "Products";
 $stylesheets = ['../css/products.css'];
 include '../partials/header.php';
@@ -39,14 +45,11 @@ include '../partials/navbar.php';
         </div>
 
         <!-- Submission Form Section -->
-        <div>
-            <?php include '../partials/sellForm.php'; ?>
-        </div>
+        <?php include '../partials/sellForm.php'; ?>
     </main>
+
     <!-- Footer Section -->
-    <div>
-        <?php include '../partials/footer.php' ?>
-    </div>
+    <?php include '../partials/footer.php' ?>
 </body>
 
 </html>

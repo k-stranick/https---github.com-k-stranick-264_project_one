@@ -1,57 +1,52 @@
-<!-- item_table -->
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
 // Name: Kyle Stranick
 // Course: ITN 264
 // Section: 201
 // Title: Assignment 10: Display Database Data
 // Due: 11/8/2024
-?>
+require_once '../database/mysqli_conn.php';
+require_once '../php/productController.php';
 
-<?php
-session_start();
-require_once '../php/productController.php'; // Ensure this file includes DB connection
+// Initialize ProductController
+$productController = new ProductController($db_conn);
+
 $title = 'Item Overview';
 $stylesheets = ['../css/edit-table.css'];
 include '../partials/header.php';
 include '../partials/navBar.php';
 
-function getSortOrder($column)
-{
-  $currentOrder = $_GET['order'] ?? 'ASC';
-  $currentColumn = $_GET['column'] ?? 'id';
 
-  // Toggle sort order if the same column is clicked
+// Sorting logic
+$column = $_GET['column'] ?? 'id';
+$order = $_GET['order'] ?? 'ASC';
+$allowedColumns = ['id', 'item_name', 'price', 'city', 'state', 'condition'];
+
+// Sanitize and validate sorting parameters
+$column = in_array($column, $allowedColumns) ? $column : 'id';
+$order = strtoupper($order) === 'DESC' ? 'DESC' : 'ASC';
+
+// Fetch sorted products
+$products = $productController->fetchProducts($column, $order);
+
+// Helper functions for sorting icons and order toggling
+function getSortOrder($currentColumn, $column, $currentOrder)
+{
   return ($currentColumn === $column && $currentOrder === 'ASC') ? 'DESC' : 'ASC';
 }
 
-function getSortIcon($column)
+function getSortIcon($currentColumn, $column, $currentOrder)
 {
-  $currentColumn = $_GET['column'] ?? 'id';
-  $currentOrder = $_GET['order'] ?? 'ASC';
-
-  // Only show icon if the current column matches the sorted column
   if ($currentColumn === $column) {
-    return $currentOrder === 'ASC' ? '▲' : '▼'; // Up for ASC, down for DESC
+    return $currentOrder === 'ASC' ? '▲' : '▼';
   }
-  return ''; // No icon if column is not the current sorted column
+  return '';
 }
-
-// Define allowed columns to prevent SQL injection
-$allowedColumns = ['id', 'item_name', 'price', 'city', 'state', 'condition'];
-$column = $_GET['column'] ?? 'id';
-$order = $_GET['order'] ?? 'ASC';
-
-// Sanitize column input
-if (!in_array($column, $allowedColumns)) {
-  $column = 'id';
-}
-
-// Ensure order is ASC or DESC
-$order = strtoupper($order) === 'DESC' ? 'DESC' : 'ASC';
-
-// Update the SQL query with dynamic sorting
-$sql = "SELECT * FROM products ORDER BY `$column` $order;";
-$result = mysqli_query($db_conn, $sql) or die(mysqli_error($db_conn));
 ?>
 
 <body class="global-body">
@@ -71,42 +66,54 @@ $result = mysqli_query($db_conn, $sql) or die(mysqli_error($db_conn));
                 <th class="text-center">Edit</th>
                 <th class="text-center">Delete</th>
                 <th class="text-center sortable-header">
-                  <a href="?column=id&order=<?php echo getSortOrder('id'); ?>">Product ID <span class="sort-icon"><?php echo getSortIcon('id'); ?></span></a>
+                  <a href="?column=id&order=<?php echo getSortOrder($column, 'id', $order); ?>">Product ID <span class="sort-icon"><?php echo getSortIcon($column, 'id', $order); ?></span></a>
                 </th>
                 <th class="text-center sortable-header">
-                  <a href="?column=item_name&order=<?php echo getSortOrder('item_name'); ?>">Item Name <span class="sort-icon"><?php echo getSortIcon('item_name'); ?></span></a>
+                  <a href="?column=item_name&order=<?php echo getSortOrder($column, 'item_name', $order); ?>">Item Name <span class="sort-icon"><?php echo getSortIcon($column, 'item_name', $order); ?></span></a>
                 </th>
                 <th class="text-center sortable-header">
-                  <a href="?column=price&order=<?php echo getSortOrder('price'); ?>">Price <span class="sort-icon"><?php echo getSortIcon('price'); ?></span></a>
+                  <a href="?column=price&order=<?php echo getSortOrder($column, 'price', $order); ?>">Price <span class="sort-icon"><?php echo getSortIcon($column, 'price', $order); ?></span></a>
                 </th>
                 <th class="text-center sortable-header">
-                  <a href="?column=city&order=<?php echo getSortOrder('city'); ?>">City <span class="sort-icon"><?php echo getSortIcon('city'); ?></span></a>
+                  <a href="?column=city&order=<?php echo getSortOrder($column, 'city', $order); ?>">City <span class="sort-icon"><?php echo getSortIcon($column, 'city', $order); ?></span></a>
                 </th>
                 <th class="text-center sortable-header">
-                  <a href="?column=state&order=<?php echo getSortOrder('state'); ?>">State <span class="sort-icon"><?php echo getSortIcon('state'); ?></span></a>
+                  <a href="?column=state&order=<?php echo getSortOrder($column, 'state', $order); ?>">State <span class="sort-icon"><?php echo getSortIcon($column, 'state', $order); ?></span></a>
                 </th>
                 <th class="text-center sortable-header">
-                  <a href="?column=condition&order=<?php echo getSortOrder('condition'); ?>">Condition <span class="sort-icon"><?php echo getSortIcon('condition'); ?></span></a>
+                  <a href="?column=condition&order=<?php echo getSortOrder($column, 'condition', $order); ?>">Condition <span class="sort-icon"><?php echo getSortIcon($column, 'condition', $order); ?></span></a>
                 </th>
                 <th class="text-center">Description</th>
               </tr>
             </thead>
             <tbody>
-              <?php
-              while ($row = mysqli_fetch_assoc($result)) {
-                echo '<tr>';
-                echo '  <td class="text-center"><a href="product_edit.php?id=' . $row["id"] . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a></td>';
-                echo '  <td class="text-center"><a href="product_edit.php?id=' . $row["id"] . '" class="btn btn-alert btn-sm"><i class="fas fa-edit"></i> Delete</a></td>';
-                echo '  <td class="text-center">' . htmlspecialchars($row["id"]) . '</td>';
-                echo '  <td class="text-center">' . htmlspecialchars($row["item_name"]) . '</td>';
-                echo '  <td class="text-center">$' . htmlspecialchars($row["price"]) . '</td>';
-                echo '  <td class="text-center">' . htmlspecialchars($row["city"]) . '</td>';
-                echo '  <td class="text-center">' . strtoupper(htmlspecialchars($row["state"])) . '</td>';
-                echo '  <td class="text-center">' . htmlspecialchars($row["condition"]) . '</td>';
-                echo '  <td>' . htmlspecialchars(substr($row["description"], 0, 45)) . '...</td>';
-                echo '</tr>';
-              }
-              ?>
+              <?php if (!empty($products)): ?>
+                <?php foreach ($products as $product): ?>
+                  <tr>
+                    <td class="text-center">
+                      <a href="product_edit.php?id=<?php echo $product['id']; ?>" class="btn btn-warning btn-sm">
+                        <i class="fas fa-edit"></i> Edit
+                      </a>
+                    </td>
+                    <td class="text-center">
+                      <a href="product_delete.php?id=<?php echo $product['id']; ?>" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash-alt"></i> Delete
+                      </a>
+                    </td>
+                    <td class="text-center"><?php echo htmlspecialchars($product['id']); ?></td>
+                    <td class="text-center"><?php echo htmlspecialchars($product['item_name']); ?></td>
+                    <td class="text-center">$<?php echo htmlspecialchars($product['price']); ?></td>
+                    <td class="text-center"><?php echo htmlspecialchars($product['city']); ?></td>
+                    <td class="text-center"><?php echo strtoupper(htmlspecialchars($product['state'])); ?></td>
+                    <td class="text-center"><?php echo htmlspecialchars($product['condition']); ?></td>
+                    <td><?php echo htmlspecialchars(substr($product['description'], 0, 45)) . '...'; ?></td>
+                  </tr>
+                <?php endforeach; ?>
+              <?php else: ?>
+                <tr>
+                  <td colspan="9" class="text-center">No products found.</td>
+                </tr>
+              <?php endif; ?>
             </tbody>
           </table>
         </div>
@@ -114,7 +121,7 @@ $result = mysqli_query($db_conn, $sql) or die(mysqli_error($db_conn));
     </div>
   </main>
   <div>
-    <?php include '../partials/footer.php' ?>
+    <?php include '../partials/footer.php'; ?>
   </div>
 </body>
 

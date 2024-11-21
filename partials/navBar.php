@@ -41,6 +41,7 @@
                     <li><a class="dropdown-item" href="login.php">Login</a></li>
                     <li><a class="dropdown-item" href="account_settings.php">Account Settings</a></li>
                     <li><a class="dropdown-item" href="item_table.php">Edit Listings</a></li>
+                    <li><a class="dropdown-item" href="../php/logout.php">Logout</a></li>
                 </ul>
             </li>
         </ul>

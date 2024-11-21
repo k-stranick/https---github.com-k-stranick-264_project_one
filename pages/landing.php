@@ -1,13 +1,18 @@
-<!-- 
-Name: Kyle Stranick
-Course: ITN 264
-Section: 201
-Title: Assignment 10: Display Database Data
-Due: 11/8/2024
--->
-
-
 <?php
+session_start();
+//require_once '../database/mysqli_conn.php';
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+// Name: Kyle Stranick
+// Course: ITN 264
+// Section: 201
+// Title: Assignment 10: Display Database Data
+// Due: 11/8/2024
+
 $title = 'Home Page';
 $stylesheets = ['../css/landingpage.css'];
 include '../partials/header.php';

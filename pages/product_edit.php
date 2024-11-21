@@ -1,14 +1,19 @@
-<!--product_edit-->
 <?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
 // Name: Kyle Stranick
 // Course: ITN 264
 // Section: 201
 // Title: Assignment 10: Display Database Data
 // Due: 11/8/2024
-?>
-<?php
-session_start(); // do i need this here 
+
+require_once '../database/mysqli_conn.php';
 require_once '../php/productController.php';
+
 $productController = new ProductController($db_conn);
 $title = 'Edit Listings';
 include '../partials/header.php';

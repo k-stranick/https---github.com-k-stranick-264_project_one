@@ -1,16 +1,23 @@
 <?php
-require_once '../database/mysqli_conn.php';
-
 class ProductController
 {
     private $db;
+
+    /**
+     * Constructor to initialize the database connection
+     * @param mysqli $db Database connection object
+     */
     public function __construct($db)
     {
         $this->db = $db;
     }
 
-
-    // Fetch all products with optional sorting
+    /**
+     * Fetch all products with optional sorting
+     * @param string $column Column to sort by
+     * @param string $order Sorting order (ASC or DESC)
+     * @return array List of products
+     */
     public function fetchProducts($column = 'id', $order = 'ASC')
     {
         $allowedColumns = ['id', 'item_name', 'price', 'city', 'state', 'condition'];
@@ -21,120 +28,148 @@ class ProductController
         $result = $this->db->query($query);
 
         if (!$result) {
-            die("Error fetching products: " . $this->db->error);
+            $this->handleError("Error fetching products");
         }
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-
-    // Fetch a single product by its ID
+    /**
+     * Fetch a single product by its ID
+     * @param int $id Product ID
+     * @return array|null Product details or null if not found
+     */
     public function fetchProductById($id)
     {
         $query = "SELECT * FROM products WHERE id = ?";
         $stmt = $this->db->prepare($query);
 
         if (!$stmt) {
-            die("Statement preparation failed: " . $this->db->error);
+            $this->handleError("Statement preparation failed");
         }
 
-
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if (!$result) {
+        try {
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            return $result->fetch_assoc();
+        } finally {
             $stmt->close();
-            die("Error fetching product: " . $this->db->error);
         }
-        $product = $result->fetch_assoc();
-        $stmt->close();
-        return $product;
     }
 
+    /**
+     * Add a new product
+     * @param string $itemName Product name
+     * @param float $itemPrice Product price
+     * @param string $city City
+     * @param string $state State
+     * @param string $condition Product condition
+     * @param string $itemDescription Product description
+     * @param string $imagePaths Comma-separated image paths
+     * @return string Success or error message
+     */
     public function addProducts($itemName, $itemPrice, $city, $state, $condition, $itemDescription, $imagePaths)
     {
-        // Step 1: Prepare the INSERT query with placeholders for values
-        $query = "INSERT INTO products (item_name, price, city, `state`, `condition`, `description`, image_path) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO products (item_name, price, city, `state`, `condition`, `description`, image_path) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($query);
 
         if (!$stmt) {
-            return "Statement preparation failed: " . $this->db->error;
+            $this->handleError("Statement preparation failed");
         }
 
-        // Step 2: Bind parameters to the placeholders with appropriate data types
-        // Here, 'sdssss' specifies the data types in order
-        $stmt->bind_param("sdsssss", $itemName, $itemPrice, $city, $state, $condition, $itemDescription, $imagePaths);
-
-        if (!$stmt->execute()) {
-            $stmt->close(); // Close the statement on failure
+        try {
+            $stmt->bind_param("sdsssss", $itemName, $itemPrice, $city, $state, $condition, $itemDescription, $imagePaths);
+            $stmt->execute();
+            return "Product added successfully.";
+        } catch (Exception $e) {
             return "Error adding product: " . $stmt->error;
+        } finally {
+            $stmt->close();
         }
-
-        $stmt->close(); // Close the statement on success
-        return "Product added successfully.";
     }
 
-    // Delete a product by its ID
+    /**
+     * Delete a product by its ID
+     * @param int $id Product ID
+     * @return string Success or error message
+     */
     public function deleteProduct($id)
     {
         $query = "DELETE FROM products WHERE id = ?";
         $stmt = $this->db->prepare($query);
 
         if (!$stmt) {
-            return "Statement preparation failed: " . $this->db->error;
+            $this->handleError("Statement preparation failed");
         }
 
-        $stmt->bind_param("i", $id);
-
-        if (!$stmt->execute()) {
-            $stmt->close();
+        try {
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            return "Product deleted successfully.";
+        } catch (Exception $e) {
             return "Error deleting product: " . $stmt->error;
+        } finally {
+            $stmt->close();
         }
-
-        $stmt->close();
-        return "Product deleted successfully.";
     }
 
-    // Update a product
+    /**
+     * Update a product
+     * @param int $product_id Product ID
+     * @param string $item_name Product name
+     * @param string $description Product description
+     * @param float $price Product price
+     * @param string $condition Product condition
+     * @param string $city City
+     * @param string $state State
+     * @return string Success or error message
+     */
     public function updateProduct($product_id, $item_name, $description, $price, $condition, $city, $state)
     {
         $query = "UPDATE products SET 
-                item_name = ?, 
-                `description` = ?, 
-                price = ?, 
-                `condition` = ?, 
-                city = ?, 
-                `state` = ? 
-              WHERE id = ?";
+                  item_name = ?, `description` = ?, price = ?, `condition` = ?, city = ?, `state` = ? 
+                  WHERE id = ?";
         $stmt = $this->db->prepare($query);
 
         if (!$stmt) {
-            return "Statement preparation failed: " . $this->db->error;
+            $this->handleError("Statement preparation failed");
         }
 
-        $stmt->bind_param("ssdsssi", $item_name, $description, $price, $condition, $city, $state, $product_id);
-
-        if (!$stmt->execute()) {
-            $stmt->close();
+        try {
+            $stmt->bind_param("ssdsssi", $item_name, $description, $price, $condition, $city, $state, $product_id);
+            $stmt->execute();
+            return "Product updated successfully.";
+        } catch (Exception $e) {
             return "Error updating product: " . $stmt->error;
+        } finally {
+            $stmt->close();
         }
-        $stmt->close();
-        return "Product updated successfully.";
     }
 
-    // Get sorting order for headers
-    public function getSortOrder($currentColumn, $column, $order)
+    /**
+     * Handle errors by throwing an exception
+     * @param string $message Error message
+     * @throws Exception
+     */
+    private function handleError($message)
     {
-        return ($currentColumn === $column && $order === 'ASC') ? 'DESC' : 'ASC';
+        throw new Exception($message . ": " . $this->db->error);
     }
 
-    // Get sorting icon for headers
-    public function getSortIcon($currentColumn, $column, $order)
-    {
-        if ($currentColumn === $column) {
-            return $order === 'ASC' ? '▲' : '▼';
-        }
-        return '';
-    }
+    // // Get sorting order for headers
+    // public function getSortOrder($currentColumn, $column, $order)
+    // {
+    //     return ($currentColumn === $column && $order === 'ASC') ? 'DESC' : 'ASC';
+    // }
+
+    // // Get sorting icon for headers
+    // public function getSortIcon($currentColumn, $column, $order)
+    // {
+    //     if ($currentColumn === $column) {
+    //         return $order === 'ASC' ? '▲' : '▼';
+    //     }
+    //     return '';
+    // }
 }
