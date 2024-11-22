@@ -11,7 +11,8 @@ if (!isset($_SESSION['user_id'])) {
 // Title: Assignment 10: Display Database Data
 // Due: 11/8/2024
 
-require_once '../php/productController.php'; // Database connection and controller
+require_once '../database/mysqli_conn.php'; // Database connection
+require_once '../php/productController.php'; // Database controller
 require_once '../php/productCard.php'; // Renders individual product cards
 
 // Initialize ProductController
